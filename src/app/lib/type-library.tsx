@@ -1,11 +1,12 @@
 import { SvgIconTypeMap } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { Dispatch, SetStateAction } from "react";
+import { Dayjs } from "dayjs";
 
 export type FooterSocialType = {
     display: string,
     link: string,
-    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>
+    icon: OverridableComponent<SvgIconTypeMap<object, "svg">>
 }
 
 export type inputState = "input" | "button" | "readOnly";
@@ -39,6 +40,12 @@ export type formHandlePropsType = {
     messageState: messageParamType,
     wordCountState: wordCountParamType,
     gamePlayState: gamePlayState
+}
+
+export type PreviousGameType = {
+    GameId: number,
+    GameDate: Dayjs | string,
+    Word: WordType
 }
 
 export type WordType = {

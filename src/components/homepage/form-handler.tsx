@@ -4,11 +4,11 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 import OtpInput from "react-otp-input";
 import CheckIcon from "@mui/icons-material/Check";
-import { splitWord } from "../../utilities/word-processing";
+// import { splitWord } from "../../utilities/word-processing";
 
 import type { classColorState, formHandlePropsType, inputState, letterResponseType } from "../../app/lib/type-library";
 
-// eslint-disable-next-line no-unused-vars
+ 
 export default function FormHandler(props: formHandlePropsType) {
     const [word, setWord] = useState("");
     const [inputState, setInputState] = useState<inputState>("input");
@@ -17,7 +17,7 @@ export default function FormHandler(props: formHandlePropsType) {
 
     function handleInputSubmit() {
         if (word.length === 5) {
-            setLetterResponse(splitWord(word));
+            // setLetterResponse(splitWord(word));
             setInputState("button");
             props.messageState.setMessage("Click each letter to set if you were correct");
         } else {

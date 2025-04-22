@@ -17,14 +17,19 @@ export const navigationLinks: navigationLinkType[] = [
         filepath: "src/app/page.tsx"
     },
     {
-        display: "Letter Ranking",
-        link: "/letter-ranking",
-        filepath: "src/app/letter-ranking/page.tsx"
+        display: "Previous Words",
+        link: "/previous-words",
+        filepath: "src/app/previous-words/page.tsx"
     },
     {
         display: "Possible Words",
         link: "/possible-words",
         filepath: "src/app/possible-words/page.tsx"
+    },
+    {
+        display: "Letter Ranking",
+        link: "/letter-ranking",
+        filepath: "src/app/letter-ranking/page.tsx"
     }
 ];
 

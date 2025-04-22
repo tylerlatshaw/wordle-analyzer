@@ -7,6 +7,7 @@ import { navigationLinks } from "../../app/lib/navigation-links";
 import HomeIcon from "@mui/icons-material/Home";
 import AbcIcon from "@mui/icons-material/Abc";
 import ArticleIcon from "@mui/icons-material/Article";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { SvgIcon, SvgIconTypeMap } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import Link from "next/link";
@@ -14,7 +15,7 @@ import router from "next/router";
 
 type iconLookupType = {
     display: string
-    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>
+    icon: OverridableComponent<SvgIconTypeMap<object, "svg">>
 }
 
 const mobileLinkIcons: iconLookupType[] = [
@@ -29,6 +30,10 @@ const mobileLinkIcons: iconLookupType[] = [
     {
         display: "Possible Words",
         icon: ArticleIcon,
+    },
+    {
+        display: "Previous Words",
+        icon: CalendarMonthIcon,
     }
 ];
 
@@ -42,9 +47,11 @@ export default function Navigation() {
 
     const [isOpen, setIsOpen] = useState(false);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     isOpen ? mobileMenuButtonColor = "#22c55e" : mobileMenuButtonColor = "#FFFFFF";
 
     if (typeof document !== "undefined") {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         isOpen ? document.documentElement.style.overflow = "hidden" : document.documentElement.style.overflow = "scroll";
     }
 
@@ -74,9 +81,9 @@ export default function Navigation() {
                         {/* Logo */}
                         <div className="flex space-x-7">
                             <div className="m-auto">
-                                <a className="flex items-center text-white no-underline hover:no-underline font-black hover:text-yellow-500 text-2xl lg:text-3xl" href="/">
+                                <Link className="flex items-center text-white no-underline hover:no-underline font-black hover:text-yellow-500 text-2xl lg:text-3xl" href="/">
                                     <span className="logo-full py-1">Wordle Analyzer</span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
 

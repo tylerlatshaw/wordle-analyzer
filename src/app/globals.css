@@ -1,7 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@import "tailwindcss";
 
 /*******************************/
 /*****
@@ -42,12 +39,6 @@ body {
 
 .main-content {
     background: var(--white);
-}
-
-@media (min-width: 768px) {
-    nav {
-        background-color: rgba(3, 7, 18, .5);
-    }
 }
 
 h2 {
