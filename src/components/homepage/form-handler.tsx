@@ -4,8 +4,7 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 import OtpInput from "react-otp-input";
 import CheckIcon from "@mui/icons-material/Check";
-// import { splitWord } from "../../utilities/word-processing";
-
+import { splitWord } from "@/utilities/word-processing";
 import type { classColorState, formHandlePropsType, inputState, letterResponseType } from "../../app/lib/type-library";
 
  
@@ -17,7 +16,7 @@ export default function FormHandler(props: formHandlePropsType) {
 
     function handleInputSubmit() {
         if (word.length === 5) {
-            // setLetterResponse(splitWord(word));
+            setLetterResponse(splitWord(word));
             setInputState("button");
             props.messageState.setMessage("Click each letter to set if you were correct");
         } else {
@@ -33,28 +32,28 @@ export default function FormHandler(props: formHandlePropsType) {
             setLetterResponse(tempArray);
 
             const items = backgroundClass.slice();
-            items[index] = "bg-w-gray";
+            items[index] = "bg-gray-400";
             setBackgroundClass(items);
         } else if (letterResponse[index].response === "incorrect") {
             tempArray[index].response = "misplaced";
             setLetterResponse(tempArray);
 
             const items = backgroundClass.slice();
-            items[index] = "bg-w-yellow";
+            items[index] = "bg-yellow-400";
             setBackgroundClass(items);
         } else if (letterResponse[index].response === "misplaced") {
             tempArray[index].response = "correct";
             setLetterResponse(tempArray);
 
             const items = backgroundClass.slice();
-            items[index] = "bg-w-green";
+            items[index] = "bg-green-500";
             setBackgroundClass(items);
         } else {
             tempArray[index].response = "incorrect";
             setLetterResponse(tempArray);
 
             const items = backgroundClass.slice();
-            items[index] = "bg-w-gray";
+            items[index] = "bg-gray-400";
             setBackgroundClass(items);
         }
     }

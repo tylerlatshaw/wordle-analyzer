@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Tooltip, InputAdornment, TextField, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CancelIcon from "@mui/icons-material/Cancel";
+import NoDataFound from "../global-components/no-data-found";
 
 type OwnerState = {
     expanded: boolean;
@@ -135,6 +136,10 @@ export default function DataTable() {
         );
     }
 
+    function CustomNoResultsOverlay() {
+        return NoDataFound("Data");
+    }
+
     return <>
         <div className="flex flex-row items-center justify-center w-full my-8">
 
@@ -160,7 +165,10 @@ export default function DataTable() {
                             }}
                             pagination
                             pageSizeOptions={[10, 25, 50, 100]}
-                            slots={{ toolbar: CustomToolbar }}
+                            slots={{
+                                toolbar: CustomToolbar,
+                                noResultsOverlay: CustomNoResultsOverlay
+                            }}
                             showToolbar
                         />
                     </div>

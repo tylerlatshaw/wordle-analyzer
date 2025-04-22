@@ -12,7 +12,7 @@ export type FooterSocialType = {
 export type inputState = "input" | "button" | "readOnly";
 export type submitState = "ineligible" | "eligible" | "submitted";
 export type letterResponseState = "unset" | "correct" | "incorrect" | "misplaced";
-export type classColorState = "bg-none" | "bg-w-green" | "bg-w-yellow" | "bg-w-gray";
+export type classColorState = "bg-none" | "bg-green-500" | "bg-yellow-400" | "bg-gray-400";
 export type gameState = "playing" | "won" | "lost";
 
 export type letterResponseType = {
