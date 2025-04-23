@@ -20,32 +20,34 @@ export default function Page() {
         <div className="flex flex-row items-center justify-center w-full my-8">
           <div className="flex flex-col items-center justify-center">
             <MessageCenter message={message} setMessage={setMessage} />
-            <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} />
-            {
-              wordCount >= 2 ?
-                <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
-                <EmptyInput />
-            }
-            {
-              wordCount >= 3 ?
-                <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
-                <EmptyInput />
-            }
-            {
-              wordCount >= 4 ?
-                <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
-                <EmptyInput />
-            }
-            {
-              wordCount >= 5 ?
-                <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
-                <EmptyInput />
-            }
-            {
-              wordCount >= 6 ?
-                <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
-                <EmptyInput />
-            }
+            <div className={"flex flex-col items-center justify-center "} style={gameState !== "playing" ? { "animation": "move-right-16 1s ease 0s 1 normal forwards" } : {}}>
+              <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} />
+              {
+                wordCount >= 2 ?
+                  <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
+                  <EmptyInput />
+              }
+              {
+                wordCount >= 3 ?
+                  <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
+                  <EmptyInput />
+              }
+              {
+                wordCount >= 4 ?
+                  <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
+                  <EmptyInput />
+              }
+              {
+                wordCount >= 5 ?
+                  <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
+                  <EmptyInput />
+              }
+              {
+                wordCount >= 6 ?
+                  <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
+                  <EmptyInput />
+              }
+            </div>
           </div>
         </div>
 

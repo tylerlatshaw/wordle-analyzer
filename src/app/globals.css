@@ -209,6 +209,20 @@ input:-webkit-autofill:active {
     min-width: 4rem;
 }
 
+.main-content {
+    --move-distance: calc(2rem + 4px);
+}
+
+@keyframes move-right-16 {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(var(--move-distance));
+    }
+}
+
 
 /*******************************/
 /*****

@@ -1,18 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@mui/material";
+import { Button, styled } from "@mui/material";
 import OtpInput from "react-otp-input";
 import CheckIcon from "@mui/icons-material/Check";
 import { splitWord } from "@/utilities/word-processing";
 import type { classColorState, formHandlePropsType, inputState, letterResponseType } from "../../app/lib/type-library";
 
- 
+
 export default function FormHandler(props: formHandlePropsType) {
     const [word, setWord] = useState("");
     const [inputState, setInputState] = useState<inputState>("input");
     const [letterResponse, setLetterResponse] = useState<letterResponseType[]>([]);
-    const [backgroundClass, setBackgroundClass] = useState<classColorState[]>(["bg-none", "bg-none", "bg-none", "bg-none", "bg-none"]);
+    const [backgroundClass, setBackgroundClass] = useState<classColorState[]>(["bg-gray-400", "bg-gray-400", "bg-gray-400", "bg-gray-400", "bg-gray-400"]);
+
+    const SubmitButton = styled(Button)({
+        color: "white",
+        margin: "8px"
+    });
 
     function handleInputSubmit() {
         if (word.length === 5) {
@@ -73,10 +78,12 @@ export default function FormHandler(props: formHandlePropsType) {
                 props.messageState.setMessage("Please enter another word");
                 props.wordCountState.setWordCount(props.wordCountState.wordCount + 1);
             } else {
-                props.messageState.setMessage("Sorry, you lost");
+                props.gamePlayState.setGameState("lost");
+                props.messageState.setMessage("Sorry, you lost. 🙁");
             }
         } else {
-            props.messageState.setMessage("You won in " + props.wordCountState.wordCount + "!");
+            props.gamePlayState.setGameState("won");
+            props.messageState.setMessage("You won in " + props.wordCountState.wordCount + "! 🎉");
         }
 
     }
@@ -91,24 +98,24 @@ export default function FormHandler(props: formHandlePropsType) {
                 containerStyle={"text-5xl"}
                 inputStyle={"w-16 h-16 m-2 border-2 border-gray-400 rounded-sm uppercase"}
             />
-            <Button className="w-12 h-16 m-2 rounded-full bg-green-500 hover:bg-green-700 text-white" onClick={() => { handleInputSubmit(); }}>
+            <SubmitButton className="w-12 h-16 m-2" variant="contained" onClick={() => { handleInputSubmit(); }}>
                 <CheckIcon />
-            </Button>
+            </SubmitButton>
         </div>;
     } else if (inputState === "button") {
         return <div className="flex flex-row items-center">
             {
                 letterResponse.map((value) => (
                     <div key={value.index} className="w-16 h-16 m-2 border-2 border-gray-400 rounded-sm uppercase text-black text-5xl">
-                        <button className={"w-full h-full m-0 p-0 px-1 uppercase " + backgroundClass[value.index]} value={value.index} onClick={() => { handleButtonClick(value.index); }}>
+                        <button className={"w-full h-full m-0 p-0 px-1 cursor-pointer uppercase " + backgroundClass[value.index]} value={value.index} onClick={() => { handleButtonClick(value.index); }}>
                             {value.letter}
                         </button>
                     </div>
                 ))
             }
-            <Button className="w-12 h-16 m-2 rounded-full bg-green-500 hover:bg-green-700 text-white" onClick={() => { handleButtonSubmit(); }}>
+            <SubmitButton className="w-12 h-16 m-2 rounded-full bg-green-500 hover:bg-green-700 text-white" variant="contained" onClick={() => { handleButtonSubmit(); }}>
                 <CheckIcon />
-            </Button>
+            </SubmitButton>
         </div>;
     } else {
         return <div className="flex flex-row items-center">

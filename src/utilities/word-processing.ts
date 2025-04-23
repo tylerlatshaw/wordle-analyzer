@@ -10,7 +10,7 @@ export function splitWord(word: string) {
             {
                 index: index,
                 letter: value,
-                response: "unset"
+                response: "incorrect"
             }
         );
     });
