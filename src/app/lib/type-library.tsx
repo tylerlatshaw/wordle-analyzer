@@ -42,6 +42,24 @@ export type formHandlePropsType = {
     gamePlayState: gamePlayState
 }
 
+export type LetterRankingType = {
+    LetterId: number,
+    Letter: string,
+    Position: number,
+    Score: number
+}
+
+export type LetterRankingByGroupType = {
+    Letter: string,
+    Scores: {
+        Position1: number,
+        Position2: number,
+        Position3: number,
+        Position4: number,
+        Position5: number,
+    }
+}
+
 export type PreviousGameType = {
     GameId: number,
     GameDate: Dayjs | string,
