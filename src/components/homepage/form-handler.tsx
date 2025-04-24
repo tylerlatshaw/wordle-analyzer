@@ -5,6 +5,7 @@ import { Button, styled } from "@mui/material";
 import OtpInput from "react-otp-input";
 import CheckIcon from "@mui/icons-material/Check";
 import { splitWord } from "@/utilities/word-processing";
+import { emojiBlast } from "emoji-blast";
 import type { classColorState, formHandlePropsType, inputState, letterResponseType } from "../../app/lib/type-library";
 
 
@@ -84,8 +85,20 @@ export default function FormHandler(props: formHandlePropsType) {
         } else {
             props.gamePlayState.setGameState("won");
             props.messageState.setMessage("You won in " + props.wordCountState.wordCount + "! 🎉");
+            const element = document.getElementsByTagName("h1");
+            emojiBlast({
+                emojis: ["🎉"],
+                position() {
+                    return {
+                        x: element[0].offsetLeft + element[0].clientWidth / 2,
+                        y: element[0].offsetTop + element[0].clientHeight / 2,
+                    };
+                },
+                physics: {
+                    fontSize: { max: 56, min: 32 }
+                },
+            });
         }
-
     }
 
     if (inputState === "input") {

@@ -20,6 +20,7 @@
     "autoprefixer": "^10.0.1",
     "axios": "^1.8.4",
     "dayjs": "^1.11.13",
+    "emoji-blast": "^0.10.2",
     "hamburger-react": "^2.5.0",
     "next": "15.2.0",
     "papaparse": "^5.4.1",
