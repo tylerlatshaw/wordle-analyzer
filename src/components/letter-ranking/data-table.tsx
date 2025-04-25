@@ -9,11 +9,11 @@ import NoDataFound from "../global-components/no-data-found";
 type RowType = {
     id: number,
     letter: string,
-    p1: number | string,
-    p2: number | string,
-    p3: number | string,
-    p4: number | string,
-    p5: number | string,
+    p1: string,
+    p2: string,
+    p3: string,
+    p4: string,
+    p5: string,
 }
 
 export default function DataTable() {
@@ -65,11 +65,11 @@ export default function DataTable() {
         rows.push({
             id: index + 1,
             letter: row.Letter,
-            p1: row.Scores.Position1.toPrecision(5),
-            p2: row.Scores.Position2.toPrecision(5),
-            p3: row.Scores.Position3.toPrecision(5),
-            p4: row.Scores.Position4.toPrecision(5),
-            p5: row.Scores.Position5.toPrecision(5),
+            p1: row.Scores.Position1.toFixed(5),
+            p2: row.Scores.Position2.toFixed(5),
+            p3: row.Scores.Position3.toFixed(5),
+            p4: row.Scores.Position4.toFixed(5),
+            p5: row.Scores.Position5.toFixed(5),
         });
     });
 

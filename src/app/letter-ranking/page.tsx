@@ -14,7 +14,7 @@ export default function Page() {
                 <h1 className="w-full pb-8 text-3xl text-black md:text-4xl font-bold text-center">Letter Rankings</h1>
 
                 <div className="w-full sm:w-2/3 md:w-2/5 lg:1/4 mx-8">
-                    <p className="w-full mx-auto text-center">Lorem ipsum</p>
+                    <p className="w-full mx-auto text-center">Below is a list of all letters for each position in a word (1 - 5), and its score relative to all possible words. The higher the score, the more likely that letter will be in a word for that position.</p>
                 </div>
 
                 <DataTable />

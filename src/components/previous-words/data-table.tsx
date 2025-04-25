@@ -18,7 +18,7 @@ type RowType = {
     gameDate: Date,
     wordId: number,
     word: string,
-    score: string | number
+    score: string
 }
 
 export default function DataTable() {
@@ -42,7 +42,7 @@ export default function DataTable() {
             gameDate: new Date(row.GameDate.toString()),
             wordId: row.Word.WordleWordId,
             word: row.Word.Word,
-            score: row.Word.Score.toPrecision(5),
+            score: row.Word.Score.toFixed(5),
         });
     });
 

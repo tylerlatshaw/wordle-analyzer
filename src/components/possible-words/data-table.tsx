@@ -16,7 +16,7 @@ type OwnerState = {
 type RowType = {
     id: number,
     word: string,
-    score: number | string,
+    score: string,
 }
 
 export default function DataTable() {
@@ -38,7 +38,7 @@ export default function DataTable() {
         rows.push({
             id: row.WordleWordId,
             word: row.Word,
-            score: row.Score.toPrecision(5),
+            score: row.Score.toFixed(5),
         });
     });
 
