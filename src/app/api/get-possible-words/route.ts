@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { WordType } from "@/app/lib/type-library";
-import supabase from "@/utilities/supabase";
+import { WordType } from "../../../app/lib/type-library";
+import supabase from "../../../utilities/supabase";
 
 export async function GET() {
     try {

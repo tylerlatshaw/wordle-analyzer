@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { gameState, knownLettersType, WordType } from "@/app/lib/type-library";
+import { gameState, knownLettersType, WordType } from "../../app/lib/type-library";
 import axios from "axios";
-import { alphabet } from "@/app/lib/alphabet";
+import { alphabet } from "../../app/lib/alphabet";
 import FormHandler from "./form-handler";
 import EmptyInput from "./empty-input";
 import MessageCenter from "./message-center";

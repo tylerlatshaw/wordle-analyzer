@@ -1,4 +1,4 @@
-import InputContainer from "@/components/homepage/input-container";
+import InputContainer from "../components/homepage/input-container";
 
 export default function Page() {
 

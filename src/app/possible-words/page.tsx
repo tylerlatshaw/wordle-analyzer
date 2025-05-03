@@ -1,5 +1,5 @@
 import { Metadata } from "next/types";
-import DataTable from "@/components/possible-words/data-table";
+import DataTable from "../../components/possible-words/data-table";
 
 export const metadata: Metadata = {
     title: "Possible Words",

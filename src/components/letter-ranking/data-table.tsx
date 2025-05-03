@@ -1,11 +1,11 @@
 "use client";
 
 import axios from "axios";
-import { LetterRankingByGroupType, LetterRankingType } from "@/app/lib/type-library";
+import { LetterRankingByGroupType, LetterRankingType } from "../../app/lib/type-library";
 import { DataGrid, GridColDef, GridColumnGroupingModel } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import NoDataFound from "../global-components/no-data-found";
-import { alphabet } from "@/app/lib/alphabet";
+import { alphabet } from "../../app/lib/alphabet";
 
 type RowType = {
     id: number,

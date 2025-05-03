@@ -4,10 +4,10 @@ import { useState } from "react";
 import { Button, styled } from "@mui/material";
 import OtpInput from "react-otp-input";
 import CheckIcon from "@mui/icons-material/Check";
-import { calculateRecommendedWord, splitWord } from "@/utilities/word-processing";
+import { calculateRecommendedWord, splitWord } from "../../utilities/word-processing";
 import { emojiBlast } from "emoji-blast";
 import type { classColorState, formHandlerPropsType, inputState, letterResponseType, RecommendedWordType } from "../../app/lib/type-library";
-import { alphabet } from "@/app/lib/alphabet";
+import { alphabet } from "../../app/lib/alphabet";
 
 
 export default function FormHandler(props: formHandlerPropsType) {

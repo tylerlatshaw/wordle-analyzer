@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { WordType } from "@/app/lib/type-library";
+import { WordType } from "../../app/lib/type-library";
 import { DataGrid, GridColDef, QuickFilter, QuickFilterClear, QuickFilterControl, QuickFilterTrigger, Toolbar, ToolbarButton } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Tooltip, InputAdornment, TextField, styled } from "@mui/material";
