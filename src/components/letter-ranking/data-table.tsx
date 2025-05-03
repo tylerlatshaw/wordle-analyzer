@@ -5,6 +5,7 @@ import { LetterRankingByGroupType, LetterRankingType } from "@/app/lib/type-libr
 import { DataGrid, GridColDef, GridColumnGroupingModel } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import NoDataFound from "../global-components/no-data-found";
+import { alphabet } from "@/app/lib/alphabet";
 
 type RowType = {
     id: number,
@@ -33,7 +34,6 @@ export default function DataTable() {
 
     function transformDataToGrouping(data: LetterRankingType[]) {
         const tempArray: LetterRankingByGroupType[] = [];
-        const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 
         alphabet.forEach((currentLetter) => {
 
@@ -57,8 +57,6 @@ export default function DataTable() {
 
         return tempArray;
     }
-
-    console.log(data?.findIndex((value) => value.Letter === "B"));
 
     data?.forEach((row) => {
         const index = data.findIndex((value) => value.Letter === row.Letter);

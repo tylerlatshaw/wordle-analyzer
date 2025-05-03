@@ -36,10 +36,22 @@ export type gamePlayState = {
     setGameState: Dispatch<SetStateAction<gameState>>
 }
 
-export type formHandlePropsType = {
+export type possibleWordState = {
+    possibleWords: WordType[],
+    setPossibleWords: Dispatch<SetStateAction<WordType[]>>
+}
+
+export type knownLettersState = {
+    knownLetters: knownLettersType[],
+    setKnownLetters: Dispatch<SetStateAction<knownLettersType[]>>
+}
+
+export type formHandlerPropsType = {
     messageState: messageParamType,
     wordCountState: wordCountParamType,
-    gamePlayState: gamePlayState
+    gamePlayState: gamePlayState,
+    possibleWordsState: possibleWordState,
+    knownLettersState: knownLettersState
 }
 
 export type LetterRankingType = {
@@ -66,8 +78,17 @@ export type PreviousGameType = {
     Word: WordType
 }
 
+export type RecommendedWordType = string | undefined
+
 export type WordType = {
     WordleWordId: number,
     Word: string,
     Score: number
+}
+
+export type knownLettersType = {
+    CorrectLetter: string,
+    MisplacedLetters: string[],
+    IncorrectLetters: string[],
+    UnsetLetters: string[]
 }

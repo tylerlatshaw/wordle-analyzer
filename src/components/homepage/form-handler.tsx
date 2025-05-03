@@ -4,12 +4,13 @@ import { useState } from "react";
 import { Button, styled } from "@mui/material";
 import OtpInput from "react-otp-input";
 import CheckIcon from "@mui/icons-material/Check";
-import { splitWord } from "@/utilities/word-processing";
+import { calculateRecommendedWord, splitWord } from "@/utilities/word-processing";
 import { emojiBlast } from "emoji-blast";
-import type { classColorState, formHandlePropsType, inputState, letterResponseType } from "../../app/lib/type-library";
+import type { classColorState, formHandlerPropsType, inputState, letterResponseType, RecommendedWordType } from "../../app/lib/type-library";
+import { alphabet } from "@/app/lib/alphabet";
 
 
-export default function FormHandler(props: formHandlePropsType) {
+export default function FormHandler(props: formHandlerPropsType) {
     const [word, setWord] = useState("");
     const [inputState, setInputState] = useState<inputState>("input");
     const [letterResponse, setLetterResponse] = useState<letterResponseType[]>([]);
@@ -20,9 +21,88 @@ export default function FormHandler(props: formHandlePropsType) {
         margin: "8px"
     });
 
+    function removeInvalidLetters() {
+
+        let updatedWords = [...props.possibleWordsState.possibleWords];
+        const updatedKnownLetters = props.knownLettersState.knownLetters.map((item) => ({ ...item }));
+
+        letterResponse.forEach((letter) => {
+            const index = letter.index;
+            const currentLetterState = updatedKnownLetters[index];
+
+            if (props.knownLettersState.knownLetters[letter.index].CorrectLetter === "") {
+                const lowerLetter = letter.letter.toLowerCase();
+
+                if (letter.response === "correct") {
+                    // Mark the letter as correct at this index
+                    currentLetterState.CorrectLetter = lowerLetter;
+
+                    // Update incorrect letters to exclude this correct one
+                    currentLetterState.IncorrectLetters = alphabet.filter(
+                        (element) => element.toLowerCase() !== lowerLetter
+                    );
+
+                    // Filter the possible words to keep only those that have this correct letter at this position
+                    updatedWords = updatedWords.filter(
+                        (word) => word.Word.charAt(index).toLowerCase() === lowerLetter
+                    );
+                } else if (letter.response === "misplaced") {
+                    // Get the current state object for the letter at the given index
+                    const currentLetterState = updatedKnownLetters[index];
+
+                    // If this letter hasn't already been marked as misplaced at this position, add it
+                    if (!currentLetterState.MisplacedLetters.includes(letter.letter)) {
+                        currentLetterState.MisplacedLetters.push(letter.letter);
+                    }
+
+                    // Remove this letter from the unset list, since we've now classified it
+                    currentLetterState.UnsetLetters = currentLetterState.UnsetLetters.filter(
+                        (l) => l.toLowerCase() !== lowerLetter
+                    );
+
+                    // Filter the possible words:
+                    // - The letter must NOT appear at this index (since it's misplaced)
+                    // - The letter must appear somewhere else in the word
+                    // - The letter at this index must not already be marked as a "correct" letter
+                    updatedWords = updatedWords.filter((word) => {
+                        const wordLower = word.Word.toLowerCase();
+                        return (
+                            wordLower.charAt(index) !== lowerLetter &&
+                            wordLower.includes(lowerLetter) &&
+                            currentLetterState.CorrectLetter === ""
+                        );
+                    });
+                } else if (letter.response === "incorrect") {
+                    // Add the letter to the list of known incorrect letters for this index
+                    currentLetterState.IncorrectLetters = [
+                        ...currentLetterState.IncorrectLetters,
+                        letter.letter,
+                    ];
+
+                    // Remove it from the unset list, since we now know it's incorrect
+                    currentLetterState.UnsetLetters = currentLetterState.UnsetLetters.filter(
+                        (l) => l.toLowerCase() !== lowerLetter
+                    );
+
+                    // Filter the possible words to exclude any word that has this letter at this index
+                    updatedWords = updatedWords.filter(
+                        (word) => word.Word.charAt(index).toLowerCase() !== lowerLetter
+                    );
+                }
+            }
+        });
+
+        props.knownLettersState.setKnownLetters(updatedKnownLetters);
+        props.possibleWordsState.setPossibleWords(updatedWords);
+
+        return { updatedKnownLetters, updatedWords };
+    }
+
     function handleInputSubmit() {
         if (word.length === 5) {
-            setLetterResponse(splitWord(word));
+            const { letterResponse, backgroundClass } = splitWord(word, props.knownLettersState.knownLetters);
+            setLetterResponse(letterResponse);
+            setBackgroundClass(backgroundClass);
             setInputState("button");
             props.messageState.setMessage("Click each letter to set if you were correct");
         } else {
@@ -76,7 +156,14 @@ export default function FormHandler(props: formHandlePropsType) {
     function calculateWin() {
         if (letterResponse.some(letter => letter.response === "incorrect" || letter.response === "misplaced")) { // Not a win yet
             if (props.wordCountState.wordCount < 6) {
-                props.messageState.setMessage("Please enter another word");
+                removeInvalidLetters();
+                const { updatedKnownLetters, updatedWords } = removeInvalidLetters(); // refactor to return the filtered array
+                const recommendedWord: RecommendedWordType = calculateRecommendedWord(updatedKnownLetters, updatedWords)?.Word;
+
+                if (recommendedWord === undefined)
+                    props.messageState.setMessage("Please enter a word. We don't have one to recommend.");
+                else
+                    props.messageState.setMessage("Please enter a word. We recommend: " + recommendedWord);
                 props.wordCountState.setWordCount(props.wordCountState.wordCount + 1);
             } else {
                 props.gamePlayState.setGameState("lost");
@@ -103,14 +190,16 @@ export default function FormHandler(props: formHandlePropsType) {
 
     if (inputState === "input") {
         return <div className="otp-container flex flex-row">
-            <OtpInput
-                value={word}
-                onChange={setWord}
-                numInputs={5}
-                renderInput={(props) => <input {...props} />}
-                containerStyle={"text-5xl"}
-                inputStyle={"w-16 h-16 m-2 border-2 border-gray-400 rounded-sm uppercase"}
-            />
+            <div onKeyDown={(e) => e.key === "Enter" ? handleInputSubmit() : null}>
+                <OtpInput
+                    value={word}
+                    onChange={setWord}
+                    numInputs={5}
+                    renderInput={(props) => <input {...props} />}
+                    containerStyle={"text-5xl"}
+                    inputStyle={"w-16 h-16 m-2 border-2 border-gray-400 rounded-sm uppercase"}
+                />
+            </div>
             <SubmitButton className="w-12 h-16 m-2" variant="contained" onClick={() => { handleInputSubmit(); }}>
                 <CheckIcon />
             </SubmitButton>
