@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { LetterRankingType } from "../../../app/lib/type-library";
-import supabase from "@/utilities/supabase";
+import supabase from "../../../utilities/supabase";
 
 export async function GET() {
     try {
