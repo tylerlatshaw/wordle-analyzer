@@ -12,7 +12,11 @@ export default function PrivacyPolicy() {
 
     let buttonClasses: string;
 
-    isOpen ? buttonClasses = "w-full pl-3 pr-1 text-left border-b-[1px] border-gray-300" : buttonClasses = "w-full pl-3 pr-1 text-left border-0";
+    if (isOpen) {
+        buttonClasses = "w-full pl-3 pr-1 text-left border-b-[1px] border-gray-300";
+    } else {
+        buttonClasses = "w-full pl-3 pr-1 text-left border-0";
+    }
 
     function generateNavigation() {
         return (

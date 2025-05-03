@@ -4,7 +4,7 @@ import supabase from "@/utilities/supabase";
 
 export async function GET() {
     try {
-        const { data } = await supabase.from("possible_words").select().limit(10);
+        const { data } = await supabase.from("possible_words").select();
 
         const results: WordType[] = [];
 
