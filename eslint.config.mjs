@@ -11,14 +11,15 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    rules: {
+      semi: "error",
+      "prefer-const": "warn",
+      "quotes": ["error", "double"],
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "warn"
+    }
+  }
 ];
 
 export default eslintConfig;
-
-    // rules: {
-    //   semi: "error",
-    //   "prefer-const": "warn",
-    //   "quotes": ["error", "double"],
-    //   "no-unused-vars": "off",
-    //   "@typescript-eslint/no-unused-vars": "warn"
-    // }
