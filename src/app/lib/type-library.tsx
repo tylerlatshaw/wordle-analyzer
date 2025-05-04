@@ -12,7 +12,7 @@ export type FooterSocialType = {
 export type inputState = "input" | "button" | "readOnly";
 export type submitState = "ineligible" | "eligible" | "submitted";
 export type letterResponseState = "unset" | "correct" | "incorrect" | "misplaced";
-export type classColorState = "bg-none" | "bg-w-green" | "bg-w-yellow" | "bg-w-gray";
+export type classColorState = "bg-none" | "bg-green-500" | "bg-yellow-400" | "bg-gray-400";
 export type gameState = "playing" | "won" | "lost";
 
 export type letterResponseType = {
@@ -36,10 +36,40 @@ export type gamePlayState = {
     setGameState: Dispatch<SetStateAction<gameState>>
 }
 
-export type formHandlePropsType = {
+export type possibleWordState = {
+    possibleWords: WordType[],
+    setPossibleWords: Dispatch<SetStateAction<WordType[]>>
+}
+
+export type knownLettersState = {
+    knownLetters: knownLettersType[],
+    setKnownLetters: Dispatch<SetStateAction<knownLettersType[]>>
+}
+
+export type formHandlerPropsType = {
     messageState: messageParamType,
     wordCountState: wordCountParamType,
-    gamePlayState: gamePlayState
+    gamePlayState: gamePlayState,
+    possibleWordsState: possibleWordState,
+    knownLettersState: knownLettersState
+}
+
+export type LetterRankingType = {
+    LetterId: number,
+    Letter: string,
+    Position: number,
+    Score: number
+}
+
+export type LetterRankingByGroupType = {
+    Letter: string,
+    Scores: {
+        Position1: number,
+        Position2: number,
+        Position3: number,
+        Position4: number,
+        Position5: number,
+    }
 }
 
 export type PreviousGameType = {
@@ -48,8 +78,17 @@ export type PreviousGameType = {
     Word: WordType
 }
 
+export type RecommendedWordType = string | undefined
+
 export type WordType = {
     WordleWordId: number,
     Word: string,
     Score: number
+}
+
+export type knownLettersType = {
+    CorrectLetter: string,
+    MisplacedLetters: string[],
+    IncorrectLetters: string[],
+    UnsetLetters: string[]
 }

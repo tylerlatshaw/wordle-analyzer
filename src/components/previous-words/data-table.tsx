@@ -1,13 +1,13 @@
 "use client";
 
 import axios from "axios";
-import { PreviousGameType } from "@/app/lib/type-library";
+import { PreviousGameType } from "../../app/lib/type-library";
 import { DataGrid, GridColDef, QuickFilter, QuickFilterClear, QuickFilterControl, QuickFilterTrigger, Toolbar, ToolbarButton } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Tooltip, InputAdornment, TextField, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { Dayjs } from "dayjs";
+import NoDataFound from "../global-components/no-data-found";
 
 type OwnerState = {
     expanded: boolean;
@@ -15,10 +15,10 @@ type OwnerState = {
 
 type RowType = {
     gameId: number,
-    gameDate: Dayjs | string,
+    gameDate: Date,
     wordId: number,
     word: string,
-    score: string | number
+    score: string
 }
 
 export default function DataTable() {
@@ -39,16 +39,16 @@ export default function DataTable() {
     data?.forEach((row) => {
         rows.push({
             gameId: row.GameId,
-            gameDate: row.GameDate,
+            gameDate: new Date(row.GameDate.toString()),
             wordId: row.Word.WordleWordId,
             word: row.Word.Word,
-            score: row.Word.Score.toPrecision(5),
+            score: row.Word.Score.toFixed(5),
         });
     });
 
     const columns: GridColDef[] = [
         { field: "gameId", headerName: "Game ID", type: "number", headerClassName: "bg-gray-300" },
-        { field: "gameDate", headerName: "Game Date", type: "string", headerClassName: "bg-gray-300", headerAlign: "center", align: "center", flex: 1 },
+        { field: "gameDate", headerName: "Game Date", type: "date", headerClassName: "bg-gray-300", headerAlign: "center", align: "center", flex: 1 },
         { field: "wordId", headerName: "Word ID", type: "number", headerClassName: "bg-gray-300", headerAlign: "center", align: "center", flex: 1 },
         { field: "word", headerName: "Word", type: "string", headerClassName: "bg-gray-300", headerAlign: "center", align: "center", flex: 1 },
         { field: "score", headerName: "Score", type: "number", headerClassName: "bg-gray-300", headerAlign: "center", align: "center", flex: 1 },
@@ -142,6 +142,10 @@ export default function DataTable() {
         );
     }
 
+    function CustomNoResultsOverlay() {
+        return NoDataFound("Data");
+    }
+
     return <>
         <div className="flex flex-row items-center justify-center w-full my-8">
 
@@ -166,12 +170,15 @@ export default function DataTable() {
                                     }
                                 },
                                 sorting: {
-                                    sortModel: [{ field: "gameId", sort: "desc" }],
-                                  },                              
+                                    sortModel: [{ field: "gameDate", sort: "desc" }],
+                                },
                             }}
                             pagination
                             pageSizeOptions={[10, 25, 50, 100]}
-                            slots={{ toolbar: CustomToolbar }}
+                            slots={{
+                                toolbar: CustomToolbar,
+                                noResultsOverlay: CustomNoResultsOverlay
+                            }}
                             showToolbar
                         />
                     </div>

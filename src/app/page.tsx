@@ -1,15 +1,6 @@
-"use client";
-
-import { useState } from "react";
-import FormHandler from "../components/homepage/form-handler";
-import MessageCenter from "../components/homepage/message-center";
-import EmptyInput from "../components/homepage/empty-input";
-import { gameState } from "@/app/lib/type-library";
+import InputContainer from "../components/homepage/input-container";
 
 export default function Page() {
-  const [message, setMessage] = useState("Please enter a word");
-  const [wordCount, setWordCount] = useState(1);
-  const [gameState, setGameState] = useState<gameState>("playing");
 
   return <>
     <div className="h-full mx-4 md:mx-0">
@@ -19,33 +10,7 @@ export default function Page() {
 
         <div className="flex flex-row items-center justify-center w-full my-8">
           <div className="flex flex-col items-center justify-center">
-            <MessageCenter message={message} setMessage={setMessage} />
-            <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} />
-            {
-              wordCount >= 2 ?
-                <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
-                <EmptyInput />
-            }
-            {
-              wordCount >= 3 ?
-                <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
-                <EmptyInput />
-            }
-            {
-              wordCount >= 4 ?
-                <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
-                <EmptyInput />
-            }
-            {
-              wordCount >= 5 ?
-                <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
-                <EmptyInput />
-            }
-            {
-              wordCount >= 6 ?
-                <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} /> :
-                <EmptyInput />
-            }
+            <InputContainer />
           </div>
         </div>
 

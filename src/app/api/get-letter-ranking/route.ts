@@ -1,17 +1,18 @@
 import { NextResponse } from "next/server";
-import { WordType } from "../../../app/lib/type-library";
+import { LetterRankingType } from "../../../app/lib/type-library";
 import supabase from "../../../utilities/supabase";
 
 export async function GET() {
     try {
-        const { data } = await supabase.from("possible_words").select();
+        const { data } = await supabase.from("letter_ranking").select().order("letter");
 
-        const results: WordType[] = [];
+        const results: LetterRankingType[] = [];
 
         data?.forEach((row) => {
             results.push({
-                WordleWordId: row.id,
-                Word: row.word,
+                LetterId: row.id,
+                Letter: row.letter,
+                Position: row.position,
                 Score: row.score
             });
         });

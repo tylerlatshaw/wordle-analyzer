@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { PreviousGameType } from "@/app/lib/type-library";
-import supabase from "@/utilities/supabase";
+import { PreviousGameType } from "../../../app/lib/type-library";
+import supabase from "../../../utilities/supabase";
 import dayjs from "dayjs";
 
 export async function GET() {

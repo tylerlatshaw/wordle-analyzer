@@ -1,12 +1,13 @@
 "use client";
 
 import axios from "axios";
-import { WordType } from "@/app/lib/type-library";
+import { WordType } from "../../app/lib/type-library";
 import { DataGrid, GridColDef, QuickFilter, QuickFilterClear, QuickFilterControl, QuickFilterTrigger, Toolbar, ToolbarButton } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Tooltip, InputAdornment, TextField, styled } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CancelIcon from "@mui/icons-material/Cancel";
+import NoDataFound from "../global-components/no-data-found";
 
 type OwnerState = {
     expanded: boolean;
@@ -15,7 +16,7 @@ type OwnerState = {
 type RowType = {
     id: number,
     word: string,
-    score: number | string,
+    score: string,
 }
 
 export default function DataTable() {
@@ -37,7 +38,7 @@ export default function DataTable() {
         rows.push({
             id: row.WordleWordId,
             word: row.Word,
-            score: row.Score.toPrecision(5),
+            score: row.Score.toFixed(5),
         });
     });
 
@@ -135,6 +136,10 @@ export default function DataTable() {
         );
     }
 
+    function CustomNoResultsOverlay() {
+        return NoDataFound("Data");
+    }
+
     return <>
         <div className="flex flex-row items-center justify-center w-full my-8">
 
@@ -160,7 +165,10 @@ export default function DataTable() {
                             }}
                             pagination
                             pageSizeOptions={[10, 25, 50, 100]}
-                            slots={{ toolbar: CustomToolbar }}
+                            slots={{
+                                toolbar: CustomToolbar,
+                                noResultsOverlay: CustomNoResultsOverlay
+                            }}
                             showToolbar
                         />
                     </div>
