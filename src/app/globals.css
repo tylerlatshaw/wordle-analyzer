@@ -237,3 +237,15 @@ input:-webkit-autofill:active {
 .privacy-policy .privacy-policy-main a:hover {
     color: var(--green-600);
 }
+
+
+/*******************************/
+/*****
+/*****    UTILITIES 
+/*****
+/*******************************/
+
+.utilities-table th, td {
+    border: solid 1px black;
+    padding: 8px;
+}
