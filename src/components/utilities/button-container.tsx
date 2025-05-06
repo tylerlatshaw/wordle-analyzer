@@ -34,7 +34,7 @@ export function UtilityButtons() {
         letterRanking.forEach((letter) => {
             const lowerLetter = letter.Letter.toLowerCase();
             const matchedWords = possibleWords.filter((word) =>
-                word.Word.charAt(letter.Position - 1).toLowerCase() === lowerLetter
+                word.Word.charAt(letter.Position).toLowerCase() === lowerLetter
             );
             const positionScore = matchedWords.length / wordCount;
             tempArray.push({
@@ -65,7 +65,7 @@ export function UtilityButtons() {
             let wordScore = 0;
             splitWord.forEach((splitLetter, index) => {
                 wordScore += updatedLetterRanking.find((ranking) => {
-                    return ranking.Letter.toLowerCase() === splitLetter.toLowerCase() && ranking.Position === index + 1;
+                    return ranking.Letter.toLowerCase() === splitLetter.toLowerCase() && ranking.Position === index;
                 })!.Score;
             });
             tempArray.push({
