@@ -1,5 +1,5 @@
 import { Metadata } from "next/types";
-import TableContainer from "../../components/homepage/input-container";
+import TableContainer from "../../components/previous-words/data-table";
 
 export const metadata: Metadata = {
     title: "Previous Words",

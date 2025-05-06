@@ -26,7 +26,7 @@ export default function DataTable() {
 
     useEffect(() => {
         try {
-            axios.get("/api/get-possible-words").then((response) => {
+            axios.get("/api/get-all-words").then((response) => {
                 setData(response.data);
             });
         } catch (error) {
@@ -161,6 +161,9 @@ export default function DataTable() {
                                     filterModel: {
                                         items: []
                                     }
+                                },
+                                sorting: {
+                                    sortModel: [{ field: "word", sort: "asc" }],
                                 }
                             }}
                             pagination
