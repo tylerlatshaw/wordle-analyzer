@@ -4,11 +4,9 @@ import { useState } from "react";
 import { Button, styled } from "@mui/material";
 import OtpInput from "react-otp-input";
 import CheckIcon from "@mui/icons-material/Check";
-import { calculateRecommendedWord, splitWord } from "../../utilities/word-processing";
+import { calculateRecommendedWord, removeInvalidWords, splitWord } from "../../utilities/word-processing";
 import { emojiBlast } from "emoji-blast";
 import type { classColorState, formHandlerPropsType, inputState, letterResponseType, RecommendedWordType } from "../../app/lib/type-library";
-import { alphabet } from "../../app/lib/alphabet";
-
 
 export default function FormHandler(props: formHandlerPropsType) {
     const [word, setWord] = useState("");
@@ -20,103 +18,6 @@ export default function FormHandler(props: formHandlerPropsType) {
         color: "white",
         margin: "8px"
     });
-
-    function removeInvalidWords() {
-        let updatedWords = [...props.possibleWordsState.possibleWords];
-        const updatedKnownLetters = props.knownLettersState.knownLetters.map((item) => ({ ...item }));
-
-        // Step 1: Pre-collect correct letters from this response
-        const correctLetters = new Map<number, string>();
-        letterResponse.forEach(({ index, letter, response }) => {
-            if (response === "correct") {
-                correctLetters.set(index, letter.toLowerCase());
-            }
-        });
-
-        letterResponse.forEach(({ index, letter, response }) => {
-            const lowerLetter = letter.toLowerCase();
-            const currentLetterState = updatedKnownLetters[index];
-
-            switch (response) {
-                case "correct":
-                    currentLetterState.CorrectLetter = lowerLetter;
-                    currentLetterState.IncorrectLetters = alphabet.filter(
-                        (l) => l.toLowerCase() !== lowerLetter
-                    );
-                    updatedWords = updatedWords.filter(
-                        (word) => word.Word.charAt(index).toLowerCase() === lowerLetter
-                    );
-                    break;
-
-                case "incorrect":
-                    // Only remove the letter completely if it's not marked as correct/misplaced elsewhere
-                    const isElsewhereCorrectOrMisplaced = letterResponse.some(
-                        (lr) =>
-                            lr.letter.toLowerCase() === lowerLetter &&
-                            lr.index !== index &&
-                            (lr.response === "correct" || lr.response === "misplaced")
-                    );
-
-                    if (!isElsewhereCorrectOrMisplaced) {
-                        // Remove all words containing the letter at any position
-                        updatedWords = updatedWords.filter(
-                            (word) => !word.Word.toLowerCase().includes(lowerLetter)
-                        );
-                    } else {
-                        // Only remove words with that letter at this index
-                        updatedWords = updatedWords.filter(
-                            (word) => word.Word.charAt(index).toLowerCase() !== lowerLetter
-                        );
-                    }
-
-                    currentLetterState.IncorrectLetters.push(lowerLetter);
-                    currentLetterState.UnsetLetters = currentLetterState.UnsetLetters.filter(
-                        (l) => l.toLowerCase() !== lowerLetter
-                    );
-                    break;
-
-                case "misplaced":
-                    if (!currentLetterState.MisplacedLetters.includes(lowerLetter)) {
-                        currentLetterState.MisplacedLetters.push(lowerLetter);
-                    }
-
-                    currentLetterState.UnsetLetters = currentLetterState.UnsetLetters.filter(
-                        (l) => l.toLowerCase() !== lowerLetter
-                    );
-
-                    updatedWords = updatedWords.filter((word) => {
-                        const wordLower = word.Word.toLowerCase();
-
-                        // Must not be at the given index
-                        if (wordLower.charAt(index) === lowerLetter) return false;
-
-                        // Must appear elsewhere in the word
-                        for (let i = 0; i < wordLower.length; i++) {
-                            if (
-                                i !== index &&
-                                wordLower[i] === lowerLetter &&
-                                correctLetters.get(i) !== lowerLetter // make sure we don't reuse a correct spot
-                            ) {
-                                return true;
-                            }
-                        }
-
-                        return false;
-                    });
-
-                    break;
-
-                default:
-                    break;
-            }
-        });
-
-        props.knownLettersState.setKnownLetters(updatedKnownLetters);
-        props.possibleWordsState.setPossibleWords(updatedWords);
-
-        return { updatedKnownLetters, updatedWords };
-    }
-
 
     function handleInputSubmit() {
         if (word.length === 5) {
@@ -176,7 +77,7 @@ export default function FormHandler(props: formHandlerPropsType) {
     function calculateWin() {
         if (letterResponse.some(letter => letter.response === "incorrect" || letter.response === "misplaced")) { // Not a win yet
             if (props.wordCountState.wordCount < 6) {
-                const { updatedKnownLetters, updatedWords } = removeInvalidWords(); // refactor to return the filtered array
+                const { updatedKnownLetters, updatedWords } = removeInvalidWords(props, letterResponse); // refactor to return the filtered array
                 const recommendedWord: RecommendedWordType = calculateRecommendedWord(updatedKnownLetters, updatedWords)?.Word;
 
                 if (recommendedWord === undefined)
