@@ -1,7 +1,7 @@
 import { alphabet } from "@/app/lib/alphabet";
-import { classColorState, formHandlerPropsType, knownLettersType, letterResponseType, WordType } from "../app/lib/type-library";
+import { classColorState, formHandlerPropsType, KnownLettersType, letterResponseType, WordType } from "../app/lib/type-library";
 
-export function splitWord(word: string, knownLetters: knownLettersType[]) {
+export function splitWord(word: string, knownLetters: KnownLettersType[]) {
     const letterResponse: letterResponseType[] = [];
     const backgroundClass: classColorState[] = [];
     const array = word.split("");
@@ -39,7 +39,7 @@ export function splitWord(word: string, knownLetters: knownLettersType[]) {
     return { letterResponse, backgroundClass };
 }
 
-export function calculateRecommendedWord(knownLetters: knownLettersType[], remainingWords: WordType[]) {
+export function calculateRecommendedWord(knownLetters: KnownLettersType[], remainingWords: WordType[]) {
     const resultSet = remainingWords.sort((a, b) =>
         (a.Score > b.Score) ? -1 : 1
     );
@@ -55,7 +55,7 @@ export function removeInvalidWords(
     letterResponse: letterResponseType[],
 ): {
     updatedWords: WordType[],
-    updatedKnownLetters: knownLettersType[]
+    updatedKnownLetters: KnownLettersType[]
 } {
 
     let updatedWords = [...props.possibleWordsState.possibleWords];

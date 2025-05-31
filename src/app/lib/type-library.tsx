@@ -42,8 +42,8 @@ export type possibleWordState = {
 }
 
 export type knownLettersState = {
-    knownLetters: knownLettersType[],
-    setKnownLetters: Dispatch<SetStateAction<knownLettersType[]>>
+    knownLetters: KnownLettersType[],
+    setKnownLetters: Dispatch<SetStateAction<KnownLettersType[]>>
 }
 
 export type formHandlerPropsType = {
@@ -54,11 +54,11 @@ export type formHandlerPropsType = {
     knownLettersState: knownLettersState
 }
 
-export type LetterRankingType = {
-    LetterId: number,
-    Letter: string,
-    Position: number,
-    Score: number
+export type KnownLettersType = {
+    CorrectLetter: string,
+    MisplacedLetters: string[],
+    IncorrectLetters: string[],
+    UnsetLetters: string[]
 }
 
 export type LetterRankingByGroupType = {
@@ -72,23 +72,49 @@ export type LetterRankingByGroupType = {
     }
 }
 
+export type LetterRankingType = {
+    LetterId: number,
+    Letter: string,
+    Position: number,
+    Score: number
+}
+
+export type letterRankingState = {
+    letterRanking: LetterRankingType[],
+    setLetterRanking: Dispatch<SetStateAction<LetterRankingType[]>>
+}
+
+export type PreviousGameInputType = {
+    ApiKey: string,
+    GameData: {
+        GameId: number | undefined,
+        GameDate: string,
+        Word: string
+    }[]
+}
+
 export type PreviousGameType = {
+    Id?: number,
     GameId: number,
     GameDate: Dayjs | string,
-    Word: WordType
+    Word: WordType | string
+}
+
+export type previousGameState = {
+    previousGames: PreviousGameType[],
+    setPreviousGames: Dispatch<SetStateAction<PreviousGameType[]>>
 }
 
 export type RecommendedWordType = string | undefined
+
+export type UtilityPropsType = {
+    possibleWordsState: possibleWordState,
+    letterRankingState: letterRankingState,
+    previousGameState: previousGameState
+}
 
 export type WordType = {
     WordleWordId: number,
     Word: string,
     Score: number
-}
-
-export type knownLettersType = {
-    CorrectLetter: string,
-    MisplacedLetters: string[],
-    IncorrectLetters: string[],
-    UnsetLetters: string[]
 }
