@@ -20,8 +20,9 @@ type SubmitState = "Idle" | "Success" | "Error";
 export function AddPreviousGameContainer(props: UtilityPropsType) {
 
     function getMostRecentGame() {
-        const length = props.previousGameState.previousGames.length;
-        const game = props.previousGameState.previousGames[length - 1];
+        const game = props.previousGameState.previousGames.reduce((prev, current) => {
+            return (prev && prev.GameId > current.GameId) ? prev : current;
+        });
         return game;
     }
 
@@ -58,8 +59,6 @@ export function AddPreviousGameContainer(props: UtilityPropsType) {
         setResponseMessage("");
         setLoadingState(true);
 
-        console.log(formData);
-
         try {
             const { data } = await axios.post("/api/add-previous-words", {
                 GameData: formData.GameData
@@ -69,19 +68,46 @@ export function AddPreviousGameContainer(props: UtilityPropsType) {
                 }
             });
 
-            const addedGames = data.addedData.length;
-            setResponseMessage("Successfully added " + addedGames + " game" + (addedGames !== 1 ? "s" : ""));
-            setSubmitState("Success");
-            reset({
-                ApiKey: "",
-                GameData: [
-                    { GameId: mostRecentGame!.GameId + 1, GameDate: dayjs(mostRecentGame!.GameDate).add(1, "day").toString() },
-                    { GameId: mostRecentGame!.GameId + 2, GameDate: dayjs(mostRecentGame!.GameDate).add(2, "day").toString() },
-                    { GameId: mostRecentGame!.GameId + 3, GameDate: dayjs(mostRecentGame!.GameDate).add(3, "day").toString() },
-                    { GameId: mostRecentGame!.GameId + 4, GameDate: dayjs(mostRecentGame!.GameDate).add(4, "day").toString() },
-                    { GameId: mostRecentGame!.GameId + 5, GameDate: dayjs(mostRecentGame!.GameDate).add(5, "day").toString() },
-                ]
-            });
+            console.log(data);
+
+            let tempMessage = "";
+            const addedData: PreviousGameType[] = data.addedData;
+            const countAdded = addedData.length;
+            const invalidData: PreviousGameInputType["GameData"] = data.invalidData;
+            const invalidCount = invalidData.length;
+
+            if (countAdded > 0) {
+                tempMessage = "Successfully added " + countAdded + " game" + (countAdded !== 1 ? "s! " : "! ");
+                setSubmitState("Success");
+
+                reset({
+                    ApiKey: "",
+                    GameData: [
+                        { GameId: mostRecentGame!.GameId + 1, GameDate: dayjs(mostRecentGame!.GameDate).add(1, "day").toString() },
+                        { GameId: mostRecentGame!.GameId + 2, GameDate: dayjs(mostRecentGame!.GameDate).add(2, "day").toString() },
+                        { GameId: mostRecentGame!.GameId + 3, GameDate: dayjs(mostRecentGame!.GameDate).add(3, "day").toString() },
+                        { GameId: mostRecentGame!.GameId + 4, GameDate: dayjs(mostRecentGame!.GameDate).add(4, "day").toString() },
+                        { GameId: mostRecentGame!.GameId + 5, GameDate: dayjs(mostRecentGame!.GameDate).add(5, "day").toString() },
+                    ]
+                });
+            } else {
+                setSubmitState("Error");
+            }
+
+            if (invalidCount > 0) {
+                tempMessage = tempMessage + "Unable to add ";
+                invalidData.forEach((word, index) => {
+                    tempMessage = tempMessage.concat(word.Word);
+                    if (invalidCount - 2 === index && invalidCount >= 3)
+                        tempMessage = tempMessage.concat(", and ");
+                    else if (invalidCount - 1 !== index && invalidCount >= 3)
+                        tempMessage = tempMessage.concat(", ");
+                    else if (invalidCount - 2 === index)
+                        tempMessage = tempMessage.concat(" and ");
+                });
+            }
+
+            setResponseMessage(tempMessage);
         } catch (e) {
             const error = e as AxiosError;
             const errorMessage = error.response?.data as unknown as { error: string };
@@ -150,7 +176,7 @@ export function AddPreviousGameContainer(props: UtilityPropsType) {
     return (<>
         <h2>Add Previous Games</h2>
 
-        <form className="flex flex-col w-full gap-3" method="POST" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-3 w-full lg:w-[827px]" method="POST" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-row justify-between w-full mt-2 mb-4">
                 <div className="flex flex-col self-end gap-1 h-full w-2/3">
                     <div><span className="font-extrabold">Most Recent Game ID: </span>{mostRecentGame?.GameId}</div>
@@ -210,15 +236,6 @@ export function AddPreviousGameContainer(props: UtilityPropsType) {
                                                 )}
                                             />
                                         </LocalizationProvider>
-                                        {/* <TextField
-                                            {...register(`GameData.${index}.GameDate` as const)}
-                                            placeholder="Enter a Game Date"
-                                            // type="date"
-                                            required
-                                            disabled={loadingState}
-                                            className={inputStyles}
-                                            sx={{ "div": { "minHeight": "48px", "maxHeight": "48px" } }}
-                                        /> */}
                                     </TableCell>
                                     <TableCell align="right">
                                         <TextField
@@ -256,8 +273,10 @@ export function AddPreviousGameContainer(props: UtilityPropsType) {
                             {loadingState ? <>Submit&nbsp;<CircularProgress size={16} sx={{ color: "white" }} /></> : <>Submit&nbsp;<SendIcon className="text-lg flex items-center" /></>}
                         </span>
                     </SubmitButton>
-                    <span className={`pl-3 text-md  ${GetResponseCssClass()}`}>{responseMessage}</span>
                 </div>
+
+                <p className={`w-full max-w-full pl-3 text-md wrap-normal break-normal  ${GetResponseCssClass()}`}>{responseMessage}</p>
+
                 <AddButton onClick={() => append({
                     GameId: fields[fields.length - 1].GameId! + 1,
                     GameDate: dayjs(fields[fields.length - 1].GameDate).add(1, "day").toString(),
