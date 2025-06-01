@@ -8,6 +8,7 @@ export async function POST(request: Request) {
     const gamesToAdd: PreviousGameInputType["GameData"] = requestData.GameData;
     const matchedWords: PreviousGameType[] = [];
     const addedGames: PreviousGameType[] = [];
+    const invalidWords: PreviousGameInputType["GameData"] = [];
     const requestKey = request.headers.get("x-api-key");
 
     if (requestKey !== process.env.API_KEY) {
@@ -35,6 +36,12 @@ export async function POST(request: Request) {
                             Score: matchedWord!.score
                         }
                     });
+                } else {
+                    invalidWords.push({
+                        GameId: game.GameId,
+                        GameDate: dayjs(game.GameDate).toString(),
+                        Word: game.Word.toUpperCase()
+                    });
                 }
             });
         }
@@ -42,10 +49,6 @@ export async function POST(request: Request) {
         if (selectError) {
             console.error("Insert error:", selectError);
             return NextResponse.json({ error: "Unexpected server error: " + selectError }, { status: 500 });
-        }
-
-        if (matchedWords.length === 0) {
-            return NextResponse.json({ error: "Unable to find a matching word" }, { status: 500 });
         }
 
         for (const word of matchedWords) {
@@ -79,7 +82,7 @@ export async function POST(request: Request) {
             }
         }
 
-        return NextResponse.json({ addedData: addedGames }, { status: 200 });
+        return NextResponse.json({ addedData: addedGames, invalidData: invalidWords }, { status: 200 });
     } catch (error) {
         console.error("Unexpected error:", error);
         return NextResponse.json({ error: "Unexpected server error: " + error }, { status: 500 });

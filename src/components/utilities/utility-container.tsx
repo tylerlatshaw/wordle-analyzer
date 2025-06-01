@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { AddPreviousGameContainer } from "./add-previous-game-container";
 import { UtilityButtons } from "./button-container";
+import { AddPreviousGameLoadingContainer } from "./add-previous-game-loading-container";
 
 export function UtilityContainer() {
 
@@ -34,11 +35,11 @@ export function UtilityContainer() {
     }, []);
 
     return <>
-        <div className="flex flex-row gap-8">
-            <div>
+        <div className="flex flex-col xl:flex-row w-full gap-8">
+            <div className="w-full">
                 {
                     loadingState ?
-                        <div>Loading...</div> :
+                        <AddPreviousGameLoadingContainer /> :
                         <AddPreviousGameContainer
                             possibleWordsState={{ possibleWords, setPossibleWords }}
                             letterRankingState={{ letterRanking, setLetterRanking }}
