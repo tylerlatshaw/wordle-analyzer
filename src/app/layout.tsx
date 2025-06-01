@@ -10,10 +10,10 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   title: {
-    template: "%s | Tyler Latshaw",
+    template: "%s | Wordle Analyzer",
     default: "Wordle Word Analyzer | Tyler Latshaw",
   },
-  description: "Tyler Latshaw is a professionally-certified Scrum Master with years of experience in project management, web design, leadership, and mentoring.",
+  description: "Crush your Wordle game! Enter your guesses and get smart word suggestions to solve the puzzle faster with Wordle Word Analyzer.",
   generator: "Next.js",
   applicationName: "Next.js",
   keywords: ["Next.js", "React", "JavaScript"],

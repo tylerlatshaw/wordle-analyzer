@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { PreviousGameType } from "../../app/lib/type-library";
+import { PreviousGameType, WordType } from "../../app/lib/type-library";
 import { DataGrid, GridColDef, QuickFilter, QuickFilterClear, QuickFilterControl, QuickFilterTrigger, Toolbar, ToolbarButton } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { Tooltip, InputAdornment, TextField, styled } from "@mui/material";
@@ -40,9 +40,9 @@ export default function DataTable() {
         rows.push({
             gameId: row.GameId,
             gameDate: new Date(row.GameDate.toString()),
-            wordId: row.Word.WordleWordId,
-            word: row.Word.Word,
-            score: row.Word.Score.toFixed(5),
+            wordId: (row.Word as WordType).WordleWordId,
+            word: (row.Word as WordType).Word,
+            score: (row.Word as WordType).Score.toFixed(5),
         });
     });
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { gameState, knownLettersType, WordType } from "../../app/lib/type-library";
+import { gameState, KnownLettersType, WordType } from "../../app/lib/type-library";
 import axios from "axios";
 import { alphabet } from "../../app/lib/alphabet";
 import FormHandler from "./form-handler";
@@ -15,7 +15,7 @@ export default function InputContainer() {
     const [wordCount, setWordCount] = useState(1);
     const [gameState, setGameState] = useState<gameState>("playing");
     const [possibleWords, setPossibleWords] = useState<WordType[]>([]);
-    const [knownLetters, setKnownLetters] = useState<knownLettersType[]>([
+    const [knownLetters, setKnownLetters] = useState<KnownLettersType[]>([
         {
             UnsetLetters: alphabet,
             CorrectLetter: "",
