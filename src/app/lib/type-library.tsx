@@ -79,6 +79,11 @@ export type LetterRankingType = {
     Score: number
 }
 
+export type LetterRankingInputType = {
+    ApiKey: string,
+    LetterRanking: LetterRankingType[],
+}
+
 export type letterRankingState = {
     letterRanking: LetterRankingType[],
     setLetterRanking: Dispatch<SetStateAction<LetterRankingType[]>>
@@ -111,6 +116,11 @@ export type UtilityPropsType = {
     possibleWordsState: possibleWordState,
     letterRankingState: letterRankingState,
     previousGameState: previousGameState
+}
+
+export type WordRankingInputType = {
+    ApiKey: string,
+    WordRanking: WordType[],
 }
 
 export type WordType = {

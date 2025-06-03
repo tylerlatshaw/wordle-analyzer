@@ -68,8 +68,6 @@ export function AddPreviousGameContainer(props: UtilityPropsType) {
                 }
             });
 
-            console.log(data);
-
             let tempMessage = "";
             const addedData: PreviousGameType[] = data.addedData;
             const countAdded = addedData.length;
@@ -143,6 +141,11 @@ export function AddPreviousGameContainer(props: UtilityPropsType) {
         "&:hover": {
             backgroundColor: "#E7000B",
         },
+        "&:disabled": {
+            color: "white",
+            backgroundColor: "#E7000B",
+            cursor: "not-allowed"
+        },
     }));
 
     const AddButton = styled(Button)<ButtonProps>(() => ({
@@ -157,6 +160,11 @@ export function AddPreviousGameContainer(props: UtilityPropsType) {
         "&:hover": {
             backgroundColor: "#0568A0",
         },
+        "&:disabled": {
+            color: "white",
+            backgroundColor: "#0568A0",
+            cursor: "not-allowed"
+        },
     }));
 
     const SubmitButton = styled(Button)<ButtonProps>(() => ({
@@ -167,9 +175,14 @@ export function AddPreviousGameContainer(props: UtilityPropsType) {
         paddingLeft: "14px",
         paddingRight: "14px",
         color: "white",
-        backgroundColor: "#00C950",
+        backgroundColor: "#00A53D",
         "&:hover": {
-            backgroundColor: "#00A53D",
+            backgroundColor: "#008236",
+        },
+        "&:disabled": {
+            color: "white",
+            backgroundColor: "#008236",
+            cursor: "not-allowed"
         },
     }));
 

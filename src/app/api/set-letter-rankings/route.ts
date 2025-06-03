@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { LetterRankingType } from "../../lib/type-library";
+import { LetterRankingInputType } from "../../lib/type-library";
 import supabase from "../../../utilities/supabase";
 
 type Columns = {
@@ -10,15 +10,25 @@ type Columns = {
 };
 
 export async function POST(request: Request) {
-    try {
-        const { letterRanking }: { letterRanking: LetterRankingType[] } = await request.json();
+    const requestData: LetterRankingInputType = await request.json();
+    const letterRanking: LetterRankingInputType["LetterRanking"] = requestData.LetterRanking;
+    const requestKey = request.headers.get("x-api-key");
 
-        const upsertData: Columns[] = letterRanking.map(item => ({
-            id: item.LetterId,
-            letter: item.Letter,
-            position: item.Position,
-            score: item.Score
-        }));
+    if (requestKey !== process.env.API_KEY) {
+        return NextResponse.json({ error: "Invalid API Key" }, { status: 401 });
+    }
+
+    try {
+        const upsertData: Columns[] = [];
+
+        letterRanking.map(item => {
+            upsertData.push({
+                id: item.LetterId,
+                letter: item.Letter,
+                position: item.Position,
+                score: item.Score
+            });
+        });
 
         const { data, error } = await supabase
             .from("letter_ranking")
@@ -27,10 +37,10 @@ export async function POST(request: Request) {
 
         if (error) {
             console.error("Supabase error:", error);
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return NextResponse.json({ error: "Unexpected server error: " + error.message }, { status: 500 });
         }
 
-        return NextResponse.json(data);
+        return NextResponse.json({ letterRanking: data }, { status: 200 });
     } catch (error) {
         console.error("Unexpected error:", error);
         return NextResponse.json({ error: "Unexpected server error" }, { status: 500 });
