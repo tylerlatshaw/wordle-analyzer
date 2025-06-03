@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { WordType } from "../../lib/type-library";
+import { WordRankingInputType } from "../../lib/type-library";
 import supabase from "../../../utilities/supabase";
 
 type Columns = {
@@ -9,14 +9,24 @@ type Columns = {
 };
 
 export async function POST(request: Request) {
-    try {
-        const { possibleWords }: { possibleWords: WordType[] } = await request.json();
+    const requestData: WordRankingInputType = await request.json();
+    const wordRanking: WordRankingInputType["WordRanking"] = requestData.WordRanking;
+    const requestKey = request.headers.get("x-api-key");
 
-        const upsertData: Columns[] = possibleWords.map(item => ({
-            id: item.WordleWordId,
-            word: item.Word,
-            score: item.Score
-        }));
+    if (requestKey !== process.env.API_KEY) {
+        return NextResponse.json({ error: "Invalid API Key" }, { status: 401 });
+    }
+
+    try {
+        const upsertData: Columns[] = [];
+
+        wordRanking.map(item => {
+            upsertData.push({
+                id: item.WordleWordId,
+                word: item.Word,
+                score: item.Score
+            });
+        });
 
         const { data, error } = await supabase
             .from("possible_words")
@@ -25,10 +35,10 @@ export async function POST(request: Request) {
 
         if (error) {
             console.error("Supabase error:", error);
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return NextResponse.json({ error: "Unexpected server error: " + error.message }, { status: 500 });
         }
 
-        return NextResponse.json(data);
+        return NextResponse.json({ wordRanking: data }, { status: 200 });
     } catch (error) {
         console.error("Unexpected error:", error);
         return NextResponse.json({ error: "Unexpected server error" }, { status: 500 });
