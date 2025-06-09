@@ -8,21 +8,6 @@ export function AddPreviousGameLoadingContainer() {
         <h2>Add Previous Games</h2>
 
         <div className="flex flex-col gap-3 w-full lg:w-[827px]">
-            <div className="flex flex-row justify-between w-full mt-2 mb-4">
-                <div className="flex flex-col self-end gap-1 h-full w-2/3">
-                    <div className="flex flex-row">
-                        <span className="font-extrabold">Most Recent Game ID:&nbsp;</span>
-                        <div className="animate-pulse rounded w-10 bg-gray-400"></div>
-                    </div>
-                    <div className="flex flex-row">
-                        <span className="font-extrabold">Most Recent Game Date:&nbsp;</span>
-                        <div className="animate-pulse rounded w-20 bg-gray-400"></div>
-                    </div>                </div>
-                <div className="flex flex-col w-1/3">
-                    <label htmlFor="apiKey" className="font-extrabold">API Key:</label>
-                    <div className="animate-pulse rounded w-full h-12 bg-gray-400"></div>
-                </div>
-            </div>
             <TableContainer className="w-full border border-2 border-gray-400 rounded-lg shadow">
                 <Table>
                     <TableHead>
