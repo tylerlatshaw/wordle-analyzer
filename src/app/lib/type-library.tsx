@@ -15,6 +15,11 @@ export type letterResponseState = "unset" | "correct" | "incorrect" | "misplaced
 export type classColorState = "bg-none" | "bg-green-500" | "bg-yellow-400" | "bg-gray-400";
 export type gameState = "playing" | "won" | "lost";
 
+export type ApiKeyState = {
+    apiKey: string,
+    setApiKey: Dispatch<SetStateAction<string>>
+}
+
 export type letterResponseType = {
     index: number,
     letter: string,
@@ -54,6 +59,11 @@ export type formHandlerPropsType = {
     knownLettersState: knownLettersState
 }
 
+export type isDirtyState = {
+    isDirty: boolean,
+    setIsDirty: Dispatch<SetStateAction<boolean>>
+}
+
 export type KnownLettersType = {
     CorrectLetter: string,
     MisplacedLetters: string[],
@@ -89,6 +99,11 @@ export type letterRankingState = {
     setLetterRanking: Dispatch<SetStateAction<LetterRankingType[]>>
 }
 
+export type mostRecentGameState = {
+    mostRecentGame: PreviousGameType | undefined,
+    setMostRecentGame: Dispatch<SetStateAction<PreviousGameType | undefined>>
+}
+
 export type PreviousGameInputType = {
     ApiKey: string,
     GameData: {
@@ -115,7 +130,10 @@ export type RecommendedWordType = string | undefined
 export type UtilityPropsType = {
     possibleWordsState: possibleWordState,
     letterRankingState: letterRankingState,
-    previousGameState: previousGameState
+    previousGameState: previousGameState,
+    apiKey: ApiKeyState,
+    mostRecentGameState: mostRecentGameState
+    isDirtyState: isDirtyState
 }
 
 export type WordRankingInputType = {

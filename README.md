@@ -17,7 +17,7 @@
 #### Design:
 
 <a href="https://www.npmjs.com/package/tailwindcss" style="text-decoration: none;" target="_blank">
-    <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Ftylerlatshaw%2FWordleAnalyzer%2Fraw%2Fmain%2Fpackage.json&query=%24.dependencies.tailwindcss&logo=tailwindcss&label=Tailwind&style=for-the-badge" alt="Tailwind Badge">
+    <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Ftylerlatshaw%2FWordleAnalyzer%2Fraw%2Fmain%2Fpackage.json&query=%24.devDependencies.tailwindcss&logo=tailwindcss&label=Tailwind&style=for-the-badge" alt="Tailwind Badge">
 </a>
 <a href="https://www.npmjs.com/package/@mui/icons-material" style="text-decoration: none;" target="_blank">
     <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgithub.com%2Ftylerlatshaw%2FWordleAnalyzer%2Fraw%2Fmain%2Fpackage.json&query=%24.dependencies%5B%22%40mui%2Ficons-material%22%5D&logo=mui&label=Material%20Icons&color=blue&style=for-the-badge" alt="Material Icons Badge">
@@ -31,6 +31,6 @@
 
 <hr />
 
-Website &copy; 2024 Tyler J. Latshaw. |  Wordle&trade; 2023 The New York Times.
+Website &copy; 2025 Tyler J. Latshaw. |  Wordle&trade; 2023 The New York Times.
 
 All rights reserved.

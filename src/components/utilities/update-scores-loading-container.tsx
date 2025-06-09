@@ -6,12 +6,6 @@ export function UpdateScoresLoadingContainer() {
         <h2 className="mt-1">Update Scores</h2>
 
         <div className="flex flex-col gap-3 w-full">
-            <div className="flex flex-row justify-between w-full mt-2 mb-4">
-                <div className="flex flex-col w-full">
-                    <label htmlFor="apiKey" className="font-extrabold">API Key:</label>
-                    <div className="animate-pulse rounded w-full h-12 bg-gray-400"></div>
-                </div>
-            </div>
             <TableContainer className="w-full border border-2 border-gray-400 rounded-lg shadow">
                 <Table>
                     <TableHead>
