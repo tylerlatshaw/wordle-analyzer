@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
   title: {
     template: "%s | Wordle Analyzer",
-    default: "Wordle Word Analyzer | Tyler Latshaw",
+    default: "Wordle Word Analyzer",
   },
   description: "Crush your Wordle game! Enter your guesses and get smart word suggestions to solve the puzzle faster with Wordle Word Analyzer.",
   generator: "Next.js",

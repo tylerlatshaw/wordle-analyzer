@@ -60,7 +60,7 @@ export default function InputContainer() {
 
     const inputRows = <>
         <MessageCenter message={message} setMessage={setMessage} />
-        <div className={"flex flex-col items-center justify-center "} style={gameState !== "playing" ? { "animation": "move-right-16 1s ease 0s 1 normal forwards" } : {}}>
+        <div className={"disable-tap-zoom flex flex-col items-center justify-center "} style={gameState !== "playing" ? { "animation": "move-right-16 1s ease 0s 1 normal forwards" } : {}}>
             <FormHandler messageState={{ message, setMessage }} wordCountState={{ wordCount, setWordCount }} gamePlayState={{ gameState, setGameState }} possibleWordsState={{ possibleWords, setPossibleWords }} knownLettersState={{ knownLetters, setKnownLetters }} />
             {
                 wordCount >= 2 ?
