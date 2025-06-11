@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Wordle Word Analyzer",
+    "short_name": "Wordle Analyzer",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

@@ -16,7 +16,10 @@ export default function FormHandler(props: formHandlerPropsType) {
 
     const SubmitButton = styled(Button)({
         color: "white",
-        margin: "8px"
+        margin: 0,
+        padding: 0,
+        minHeight: 0,
+        minWidth: 0
     });
 
     function handleInputSubmit() {
@@ -81,7 +84,7 @@ export default function FormHandler(props: formHandlerPropsType) {
                 const recommendedWord: RecommendedWordType = calculateRecommendedWord(updatedKnownLetters, updatedWords)?.Word;
 
                 if (recommendedWord === undefined)
-                    props.messageState.setMessage("Please enter a word. We don't have one to recommend.");
+                    props.messageState.setMessage("We don't have a word to recommend.");
                 else
                     props.messageState.setMessage("Please enter a word. We recommend: " + recommendedWord);
                 props.wordCountState.setWordCount(props.wordCountState.wordCount + 1);
@@ -116,41 +119,45 @@ export default function FormHandler(props: formHandlerPropsType) {
                     onChange={setWord}
                     numInputs={5}
                     renderInput={(props) => <input {...props} />}
-                    containerStyle={"text-5xl"}
-                    inputStyle={"w-16 h-16 m-2 border-2 border-gray-400 rounded-sm uppercase"}
+                    containerStyle={"text-4xl md:text-5xl"}
+                    inputStyle={"w-12 h-12 md:w-16 md:h-16 m-1 md:m-2 border-2 border-gray-400 rounded-sm uppercase"}
                 />
             </div>
-            <SubmitButton className="w-12 h-16 m-2" variant="contained" onClick={() => { handleInputSubmit(); }}>
-                <CheckIcon />
-            </SubmitButton>
+            <div className="w-12 h-12 md:w-16 md:h-16 m-1 md:m-2">
+                <SubmitButton className="w-full h-full" variant="contained" onClick={() => { handleInputSubmit(); }}>
+                    <CheckIcon />
+                </SubmitButton>
+            </div>
         </div>;
     } else if (inputState === "button") {
         return <div className="flex flex-row items-center">
             {
                 letterResponse.map((value) => (
-                    <div key={value.index} className="w-16 h-16 m-2 border-2 border-gray-400 rounded-sm uppercase text-black text-5xl">
+                    <div key={value.index} className="w-12 h-12 md:w-16 md:h-16 m-1 md:m-2 border-2 border-gray-400 rounded-sm uppercase text-black text-4xl md:text-5xl">
                         <button className={"w-full h-full m-0 p-0 px-1 cursor-pointer uppercase " + backgroundClass[value.index]} value={value.index} onClick={() => { handleButtonClick(value.index); }}>
                             {value.letter}
                         </button>
                     </div>
                 ))
             }
-            <SubmitButton className="w-12 h-16 m-2 rounded-full bg-green-500 hover:bg-green-700 text-white" variant="contained" onClick={() => { handleButtonSubmit(); }}>
-                <CheckIcon />
-            </SubmitButton>
+            <div className="w-12 h-12 md:w-16 md:h-16 m-1 md:m-2">
+                <SubmitButton className="w-full h-full" variant="contained" onClick={() => { handleButtonSubmit(); }}>
+                    <CheckIcon />
+                </SubmitButton>
+            </div>
         </div>;
     } else {
         return <div className="flex flex-row items-center">
             {
                 letterResponse.map((value) => (
-                    <div key={value.index} className="w-16 h-16 m-2 border-2 border-gray-400 rounded-sm uppercase text-black text-5xl">
+                    <div key={value.index} className="w-12 h-12 md:w-16 md:h-16 m-1 md:m-2 border-2 border-gray-400 rounded-sm uppercase text-black text-4xl md:text-5xl">
                         <div className={"w-full h-full m-0 p-0 px-1 flex items-center justify-center uppercase " + backgroundClass[value.index]}>
                             {value.letter}
                         </div>
                     </div>
                 ))
             }
-            <div className="w-16 h-16 m-2"></div>
+            <div className="w-12 h-12 md:w-16 md:h-16 m-1 md:m-2"></div>
         </div>;
     }
 }

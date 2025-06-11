@@ -204,9 +204,24 @@ input:-webkit-autofill:active {
 /*****
 /*******************************/
 
-.otp-container input {
-    width: 4rem;
-    min-width: 4rem;
+.disable-tap-zoom {
+    touch-action: manipulation;
+}
+
+/* screen width < md */
+@media (max-width: 768px) {
+    .otp-container input {
+        width: 3rem;
+        min-width: 3rem;
+    }
+}
+
+/* screen width > md */
+@media (min-width: 768px) {
+    .otp-container input {
+        width: 4rem;
+        min-width: 4rem;
+    }
 }
 
 .main-content {
@@ -245,7 +260,8 @@ input:-webkit-autofill:active {
 /*****
 /*******************************/
 
-.utilities-table th, td {
+.utilities-table th,
+td {
     border: solid 1px black;
     padding: 8px;
 }

@@ -34,7 +34,12 @@ export default function Footer() {
     const copyright = <>
         <div className="w-full pt-6 text-md fade-in text-gray-400">
             <div className="text-center" id="copyright">
-                Website &copy; {new Date().getFullYear()} <a href="http://tylerlatshaw.com" target="_blank" className="hover:text-green-500">Tyler J. Latshaw</a>. |  Wordle&trade; 2023 The New York Times.<br />All rights reserved.
+                <span>Website &copy; {new Date().getFullYear()} <a href="http://tylerlatshaw.com" target="_blank" className="hover:text-green-500">Tyler J. Latshaw</a>.</span>
+                <span className="desktop-only"> | </span>
+                <span className="mobile-only"><br /></span>
+                <span>Wordle&trade; 2023 The New York Times.</span>
+                <br />
+                <span>All rights reserved.</span>
             </div>
         </div>
     </>;
