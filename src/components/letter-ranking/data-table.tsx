@@ -24,9 +24,10 @@ export default function DataTable() {
 
     useEffect(() => {
         try {
-            axios.get("/api/get-letter-ranking").then((response) => {
-                setData(transformDataToGrouping(response.data));
-            });
+            axios.get("/api/get-session-key")
+                .then(() => axios.get("/api/get-letter-ranking").then((response) => {
+                    setData(transformDataToGrouping(response.data));
+                }));
         } catch (error) {
             console.error("Error fetching data: ", error);
         }

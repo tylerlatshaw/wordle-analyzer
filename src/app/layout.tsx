@@ -20,6 +20,22 @@ export const metadata: Metadata = {
   authors: [{ name: "Tyler Latshaw", url: "https://tylerlatshaw.com/" }],
   creator: "Tyler J. Latshaw",
   publisher: "Tyler J. Latshaw",
+  manifest: "/favicon/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon/favicon-16x16.png", sizes: "16x16" },
+      { url: "/favicon/favicon-32x32.png", sizes: "32x32" },
+      { url: "/favicon/android-chrome-192x192.png", sizes: "192x192" },
+      { url: "/favicon/android-chrome-512x512.png", sizes: "512x512" },
+    ],
+    apple: "/favicon/apple-touch-icon.png",
+    other: [
+      { rel: "mask-icon", url: "/favicon/safari-pinned-tab.svg", color: "#5bbad5" },
+      { rel: "manifest", url: "/favicon/site.webmanifest" },
+      { rel: "msapplication-config", url: "/favicon/browserconfig.xml" },
+    ],
+  },
+
 };
 
 const merriweather = Merriweather({
@@ -36,11 +52,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={merriweather.className}>
       <head>
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
-        <link rel="manifest" href="/favicon/site.webmanifest" />
-        <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#ffc40d" />
         <meta name="theme-color" content="#ffffff" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

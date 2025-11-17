@@ -49,10 +49,11 @@ export default function InputContainer() {
 
     useEffect(() => {
         try {
-            axios.get("/api/get-possible-words").then((response) => {
-                setPossibleWords(response.data);
-                setLoading(false);
-            });
+            axios.get("/api/get-session-key")
+                .then(() => axios.get("/api/get-possible-words").then((response) => {
+                    setPossibleWords(response.data);
+                    setLoading(false);
+                }));
         } catch (error) {
             console.error("Error fetching data: ", error);
         }

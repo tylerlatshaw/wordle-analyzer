@@ -2,8 +2,16 @@ import { NextResponse } from "next/server";
 import { PreviousGameType } from "../../../app/lib/type-library";
 import supabase from "../../../utilities/supabase";
 import dayjs from "dayjs";
+import { cookies } from "next/headers";
 
 export async function GET() {
+
+    const session = (await cookies()).get("session_key")?.value;
+
+    if (!session) {
+        return new Response("Error: session key missing. Access denied.", { status: 403 });
+    }
+
     try {
         const { data } = await supabase.from("previous_words").select(`
             game_id,

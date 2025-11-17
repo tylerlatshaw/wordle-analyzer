@@ -28,9 +28,10 @@ export default function DataTable() {
 
     useEffect(() => {
         try {
-            axios.get("/api/get-previous-words").then((response) => {
-                setData(response.data);
-            });
+            axios.get("/api/get-session-key")
+                .then(() => axios.get("/api/get-previous-words").then((response) => {
+                    setData(response.data);
+                }));
         } catch (error) {
             console.error("Error fetching data: ", error);
         }
