@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { LetterRankingInputType } from "../../lib/type-library";
 import supabase from "../../../utilities/supabase";
+import { cookies } from "next/headers";
 
 type Columns = {
     id: number,
@@ -10,6 +11,13 @@ type Columns = {
 };
 
 export async function POST(request: Request) {
+
+    const session = (await cookies()).get("session_key")?.value;
+
+    if (!session) {
+        return new Response("Error: session key missing. Access denied.", { status: 403 });
+    }
+    
     const requestData: LetterRankingInputType = await request.json();
     const letterRanking: LetterRankingInputType["LetterRanking"] = requestData.LetterRanking;
     const requestKey = request.headers.get("x-api-key");

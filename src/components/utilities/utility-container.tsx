@@ -22,20 +22,21 @@ export function UtilityContainer() {
 
     useEffect(() => {
         try {
-            Promise.all([
-                axios.get("/api/get-all-words").then((response) => {
-                    setPossibleWords(response.data);
-                }),
-                axios.get("/api/get-letter-ranking").then((response) => {
-                    setLetterRanking(response.data);
-                }),
-                axios.get("/api/get-previous-words").then((response) => {
-                    setPreviousGames(response.data);
-                    setMostRecentGame(getMostRecentGame(response.data));
-                })
-            ]).then(() =>
-                setLoadingState(false)
-            );
+            axios.get("/api/get-session-key")
+                .then(() => Promise.all([
+                    axios.get("/api/get-all-words").then((response) => {
+                        setPossibleWords(response.data);
+                    }),
+                    axios.get("/api/get-letter-ranking").then((response) => {
+                        setLetterRanking(response.data);
+                    }),
+                    axios.get("/api/get-previous-words").then((response) => {
+                        setPreviousGames(response.data);
+                        setMostRecentGame(getMostRecentGame(response.data));
+                    })
+                ]).then(() =>
+                    setLoadingState(false)
+                ));
         } catch (error) {
             console.error("Error fetching data: ", error);
         }
