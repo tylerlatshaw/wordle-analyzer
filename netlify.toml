@@ -1,0 +1,25 @@
+[build]
+  command = """
+  SHORT_SHA="$(printf "%s" "$COMMIT_REF" | cut -c1-7)" &&
+  export SENTRY_RELEASE="${BRANCH}-$(date +%F)-${SHORT_SHA}" &&
+  export NEXT_PUBLIC_SENTRY_RELEASE="$SENTRY_RELEASE" &&
+
+  npm ci &&
+  npm run build &&
+
+  if [ "$NETLIFY" = "true" ] && [ "$CONTEXT" = "production" ]; then
+    echo "Publishing Sentry Release: $SENTRY_RELEASE" &&
+    ./node_modules/.bin/sentry-cli --version &&
+    ./node_modules/.bin/sentry-cli releases new "$SENTRY_RELEASE" &&
+    ./node_modules/.bin/sentry-cli releases set-commits "$SENTRY_RELEASE" --auto &&
+    ./node_modules/.bin/sentry-cli releases files "$SENTRY_RELEASE" upload-sourcemaps .next --rewrite --validate &&
+    ./node_modules/.bin/sentry-cli releases finalize "$SENTRY_RELEASE"
+  else
+    echo "Skipping Sentry Release (NETLIFY=${NETLIFY:-unset}, CONTEXT=${CONTEXT:-unset})"
+  fi
+  """
+  publish = ".next"
+  functions = "netlify/functions"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
